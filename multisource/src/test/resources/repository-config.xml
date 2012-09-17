@@ -13,24 +13,28 @@
 	   <property name="defaultTargetDataSource" ref="dataSource1"/>
 	</bean>
 	
-	<bean id="parentDataSource"
-	         class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-	         abstract="true">
-	   <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	   <property name="username" value="router"/>
-	   <property name="password" value="router"/>
+	<bean id="parentDataSource" abstract="true" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	    <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	    <property name="user" value="router"/>
+	    <property name="password" value="router"/>
+	    <property name="initialPoolSize" value="5"></property>
+	    <property name="minPoolSize" value="5"></property>
+	    <property name="maxPoolSize" value="15"/>
+	    <property name="maxStatements" value="50"></property>
+	    <property name="automaticTestTable" value="c3p0_test_table"></property>
+	    <property name="idleConnectionTestPeriod" value="21600"></property> 
 	</bean>
 	 
 	<bean id="dataSource1" parent="parentDataSource">
-	   <property name="url" value="jdbc:mysql://localhost:3306/router_1?characterEncoding=UTF-8"/>
+	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_1?characterEncoding=UTF-8"/>
 	</bean>
 	 
 	<bean id="dataSource2" parent="parentDataSource">
-	   <property name="url" value="jdbc:mysql://localhost:3306/router_2?characterEncoding=UTF-8"/>
+	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_2?characterEncoding=UTF-8"/>
 	</bean>
 	 
 	<bean id="dataSource3" parent="parentDataSource">
-	   <property name="url" value="jdbc:mysql://localhost:3306/router_3?characterEncoding=UTF-8"/>
+	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_3?characterEncoding=UTF-8"/>
 	</bean>
  
 
