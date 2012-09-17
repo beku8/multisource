@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+     p:dataSource-ref="dataSource" p:packagesToScan="com.fm.multisource.domain">
+     	<property name="hibernateProperties">
+     		<props>
+     			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+     			<prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+     		</props>
+     	</property>
+     </bean>
+
+	<bean id="dataSource" class="com.fm.multisource.datasource.CustomerRoutingDataSource">
+	   <property name="targetDataSources">
+	      <map key-type="java.lang.Integer">
+	         <entry key="2" value-ref="dataSource2"/>
+	         <entry key="3" value-ref="dataSource3"/>
+	      </map>
+	   </property>
+	   <property name="defaultTargetDataSource" ref="dataSource1"/>
+	</bean>
+	
+	<bean id="parentDataSource" abstract="true" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	    <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	    <property name="user" value="router"/>
+	    <property name="password" value="router"/>
+	    <property name="initialPoolSize" value="5"></property>
+	    <property name="minPoolSize" value="5"></property>
+	    <property name="maxPoolSize" value="15"/>
+	    <property name="maxStatements" value="50"></property>
+	    <property name="automaticTestTable" value="c3p0_test_table"></property>
+	    <property name="idleConnectionTestPeriod" value="21600"></property> 
+	</bean>
+	 
+	<bean id="dataSource1" parent="parentDataSource">
+	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_1?characterEncoding=UTF-8"/>
+	</bean>
+	 
+	<bean id="dataSource2" parent="parentDataSource">
+	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_2?characterEncoding=UTF-8"/>
+	</bean>
+	 
+	<bean id="dataSource3" parent="parentDataSource">
+	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_3?characterEncoding=UTF-8"/>
+	</bean>
+ 
+
+
+</beans>
