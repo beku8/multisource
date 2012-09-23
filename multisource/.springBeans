@@ -8,6 +8,8 @@
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
 		<config>src/main/webapp/WEB-INF/spring/security.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/casSecurity.xml</config>
+		<config>src/main/webapp/WEB-INF/spring/casSecurity-custom.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

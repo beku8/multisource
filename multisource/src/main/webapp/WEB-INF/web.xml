@@ -24,7 +24,9 @@
 		<param-value>
 			/WEB-INF/spring/root-context.xml
 			/WEB-INF/spring/repository-config.xml
-			/WEB-INF/spring/security.xml
+			/WEB-INF/spring/casSecurity-custom.xml
+<!-- 			/WEB-INF/spring/casSecurity.xml -->
+<!-- 			/WEB-INF/spring/security.xml -->
 		</param-value>
 	</context-param>
 	
@@ -56,5 +58,14 @@
       <filter-name>springSecurityFilterChain</filter-name>
       <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+     <!--
+        Included to support Single Logout. Note that the SingleSignOutFilter is included in the
+        springSecurityFilterChain. However, it could also be placed as the first filter-mapping
+        in the web.xml
+    -->
+    <listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
 
 </web-app>
