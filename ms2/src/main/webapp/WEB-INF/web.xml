@@ -19,36 +19,21 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/spring/root-context.xml
-			/WEB-INF/spring/repository-config.xml
-			/WEB-INF/spring/casSecurity-custom.xml
-<!-- 			/WEB-INF/spring/casSecurity.xml -->
-<!-- 			/WEB-INF/spring/security.xml -->
+		/WEB-INF/spring/root-context.xml
+		/WEB-INF/spring/casSecurity-custom.xml
 		</param-value>
 	</context-param>
 	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
-	<!-- sessiong neelttei bailgah tohirgoo -->
-	<filter>
-	    <filter-name>hibernateFilter</filter-name>
-	    <filter-class>com.fm.multisource.web.HibernateFilter</filter-class>
-	    <init-param>
-	       <param-name>sessionFactoryBeanName</param-name>
-	       <param-value>sessionFactory</param-value>         
-	    </init-param>      
-  	 </filter>
-  	 
-  <filter-mapping>
-     <filter-name>hibernateFilter</filter-name>
-	 <url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
+
+
 	<filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -80,5 +65,5 @@
     <listener>
         <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
     </listener>
-
+    
 </web-app>
