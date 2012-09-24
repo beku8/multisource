@@ -172,6 +172,12 @@
 		    	</exclusion>
 		    </exclusions>
 		</dependency>
+		<!-- cas depends on -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>1.6.2</version>
+		</dependency>
 	
 		<!-- Spring -->
 		<dependency>

@@ -18,7 +18,7 @@
 
 	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
 	    <property name="service" value="${cas.service.url}/ms2/j_spring_cas_security_check"/>
-	    <property name="sendRenew" value="false"/>
+	    <property name="authenticateAllArtifacts" value="true"/>
 	 </bean>
 	 
 	 <security:http entry-point-ref="casEntryPoint" use-expressions="true">
@@ -33,12 +33,24 @@
 	 
 	 <bean id="casFilter" class="org.springframework.security.cas.web.CasAuthenticationFilter">
 	    <property name="authenticationManager" ref="authenticationManager"/>
+	    <property name="proxyGrantingTicketStorage" ref="pgtStorage"/>
+    	<property name="proxyReceptorUrl" value="/j_spring_cas_security_proxyreceptor"/>
+    	<property name="serviceProperties" ref="serviceProperties"/>
+	    <property name="authenticationDetailsSource">
+	      <bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
+	    </property>
 	  </bean>
 	
 	  <bean id="casEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
 	    <property name="loginUrl" value="${cas.server.url}/cas/login"/>
 	    <property name="serviceProperties" ref="serviceProperties"/>
 	  </bean>
+	  
+	  <!--
+	    NOTE: In a real application you should not use an in memory implementation. You will also want
+	          to ensure to clean up expired tickets by calling ProxyGrantingTicketStorage.cleanup()
+	  -->
+	  <bean id="pgtStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
 	  
 	  <security:authentication-manager alias="authenticationManager">
 	    <security:authentication-provider ref="casAuthenticationProvider" />
@@ -52,11 +64,30 @@
 	    </property>
 	    <property name="serviceProperties" ref="serviceProperties" />
 	    <property name="ticketValidator">
-	      <bean class="org.jasig.cas.client.validation.Cas20ServiceTicketValidator">
-	        <constructor-arg index="0" value="${cas.server.url}/cas" />
+	      <bean class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator">
+	        <constructor-arg value="${cas.server.url}/cas"/>
+	        <property name="proxyCallbackUrl" value="${cas.service.url}/ms2/j_spring_cas_security_proxyreceptor"/>
+	        <property name="proxyGrantingTicketStorage" ref="pgtStorage"/>
+	        <property name="acceptAnyProxy" value="true"/>
 	      </bean>
 	    </property>
-	    <property name="key" value="an_id_for_this_auth_provider_only"/>
+	    <property name="key" value="ms2"/>
+	    
+	     <property name="statelessTicketCache">
+	      <bean class="org.springframework.security.cas.authentication.EhCacheBasedTicketCache">
+	        <property name="cache">
+	          <bean class="net.sf.ehcache.Cache"
+	              init-method="initialise" destroy-method="dispose">
+	            <constructor-arg value="casTickets"/>
+	            <constructor-arg value="50"/>
+	            <constructor-arg value="true"/>
+	            <constructor-arg value="false"/>
+	            <constructor-arg value="3600"/>
+	            <constructor-arg value="900"/>
+	          </bean>
+	        </property>
+	      </bean>
+	    </property>
 	  </bean>
 	
 	  <security:user-service id="userService">
