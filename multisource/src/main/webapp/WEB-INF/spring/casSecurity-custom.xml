@@ -12,8 +12,8 @@
     <!-- Configuration for the environment can be overriden by system properties -->
     <context:property-placeholder system-properties-mode="OVERRIDE" properties-ref="environment"/>
     <util:properties id="environment">
-    	<prop key="cas.service.url">http://localhost:8080</prop>
-    	<prop key="cas.server.url">http://localhost:9080</prop>
+    	<prop key="cas.service.url">https://localhost:8443</prop>
+    	<prop key="cas.server.url">https://localhost:9443</prop>
     </util:properties>
 
 	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
