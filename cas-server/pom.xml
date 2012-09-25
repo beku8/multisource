@@ -18,6 +18,7 @@
             <scope>runtime</scope>
         </dependency>
         
+        
 		<dependency>
             <groupId>org.jasig.cas</groupId>
             <artifactId>cas-server-support-generic</artifactId>
@@ -25,6 +26,37 @@
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
+        
+		<dependency>
+		     <groupId>org.jasig.cas</groupId>
+		     <artifactId>cas-server-support-jdbc</artifactId>
+		     <version>${cas.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>c3p0</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>0.9.1.2</version>
+		</dependency>
+<!-- mys -->
+       	<dependency>
+           <groupId>mysql</groupId>
+           <artifactId>mysql-connector-java</artifactId>
+           <version>5.1.12</version>
+       </dependency>
+ 
+<!--         <dependency> -->
+<!--               <groupId>commons-dbcp</groupId> -->
+<!--               <artifactId>commons-dbcp</artifactId> -->
+<!--               <version>1.2.1</version> -->
+<!--               <scope>runtime</scope> -->
+<!--          </dependency> -->
+<!--          <dependency> -->
+<!--               <groupId>mysql</groupId> -->
+<!--               <artifactId>mysql-connector-java</artifactId> -->
+<!--               <version>5.1.12</version> -->
+<!--               <scope>provided</scope> -->
+<!--          </dependency> -->
     </dependencies>
   
   	<build>

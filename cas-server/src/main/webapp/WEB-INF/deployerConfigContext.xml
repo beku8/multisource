@@ -122,21 +122,57 @@
 					| edu.someschool.its.cas.MySpecialHandler here, or you might use one of the handlers provided in the adaptors modules.
 					+-->
 <!-- 				<bean class="org.jasig.cas.authentication.handler.support.SimpleTestUsernamePasswordAuthenticationHandler" /> -->
-				<bean class="org.jasig.cas.adaptors.generic.AcceptUsersAuthenticationHandler">
-				   <property name="users">
-				      <map>
-				         <entry>
-				            <key>
-				               <value>beku</value>
-				            </key>
-				            <value>bilguun</value>
-				         </entry>
-				      </map>
-				   </property>
-				</bean>
+				
+				<bean class="org.jasig.cas.adaptors.jdbc.SearchModeSearchDatabaseAuthenticationHandler">
+				    <property name="tableUsers"><value>users</value></property>
+				    <property name="fieldUser"><value>username</value></property>
+				    <property name="fieldPassword"><value>password</value></property>
+				    <property name="dataSource" ref="dataSource"/>
+				 </bean>
+				
+<!-- 				<bean class="org.jasig.cas.adaptors.generic.AcceptUsersAuthenticationHandler"> -->
+<!-- 				   <property name="users"> -->
+<!-- 				      <map> -->
+<!-- 				         <entry> -->
+<!-- 				            <key> -->
+<!-- 				               <value>beku</value> -->
+<!-- 				            </key> -->
+<!-- 				            <value>bilguun</value> -->
+<!-- 				         </entry> -->
+<!-- 				      </map> -->
+<!-- 				   </property> -->
+<!-- 				</bean> -->
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	    <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_users?characterEncoding=UTF-8"/>
+	    <property name="user" value="router"/>
+	    <property name="password" value="router"/>
+	    <property name="initialPoolSize" value="5"></property>
+	    <property name="minPoolSize" value="5"></property>
+	    <property name="maxPoolSize" value="15"/>
+	    <property name="maxStatements" value="50"></property>
+	    <property name="automaticTestTable" value="c3p0_test_table"></property>
+	    <property name="idleConnectionTestPeriod" value="21600"></property> 
+	</bean>
+	
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!-- 		 <property name="driverClassName"> -->
+<!-- 		  <value>com.mysql.jdbc.Driver</value> -->
+<!-- 		 </property> -->
+<!-- 		 <property name="url"> -->
+<!-- 		  <value>jdbc:mysql://localhost:3306/router_users?characterEncoding=UTF-8</value> -->
+<!-- 		 </property> -->
+<!-- 		 <property name="username"> -->
+<!-- 		  <value>router</value> -->
+<!-- 		 </property> -->
+<!-- 		 <property name="password"> -->
+<!-- 		  <value>router</value> -->
+<!-- 		 </property> -->
+<!-- 	</bean> -->
 
 
 	<!--
