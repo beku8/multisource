@@ -21,6 +21,7 @@ public class HibernateFilter extends OpenSessionInViewFilter {
 		Session session = SessionFactoryUtils.getSession(sessionFactory, true);
 		//set the FlushMode to auto in order to save objects.
 		session.setFlushMode(FlushMode.AUTO);
+		logger.debug("getting session {}", session.hashCode());
 		return session;
 	}
 

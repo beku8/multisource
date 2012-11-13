@@ -1,5 +1,7 @@
 package com.fm.multisource.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,14 @@ public class ParameterBasedRouter {
 	
 	@Autowired private ItemDao itemDao;
 	
+	private	Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@RequestMapping
 	public String get(@RequestParam(value="source", defaultValue="1") Integer source, Model model){
 		CustomerContextHolder.setCustomerType(source);
+		logger.debug("setting source to {}", source);
 		model.addAttribute("items", itemDao.findAll());
+		model.addAttribute("source", source);
 		return "param";
 	}
 

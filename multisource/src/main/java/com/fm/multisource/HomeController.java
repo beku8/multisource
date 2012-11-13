@@ -6,10 +6,14 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.fm.multisource.dao.hibernate.ItemDao;
+import com.fm.multisource.datasource.CustomerContextHolder;
 
 /**
  * Handles requests for the application home page.
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@Autowired private ItemDao itemDao;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -34,6 +40,13 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String user(Model model){
+		model.addAttribute("items", itemDao.findAll());
+		model.addAttribute("source", CustomerContextHolder.getCustomerType());
+		return "param";
 	}
 	
 }

@@ -13,5 +13,6 @@
 		<li>${row.count }. ${item.name } - ${item.price } </li>
 	</c:forEach>
 	</ul>
+	<div>${source }</div>
 </body>
 </html>
