@@ -9,5 +9,9 @@
         <property name="hibernate.connection.username">router</property>
          <property name="hibernate.connection.password">router</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+   
+   <mapping class="com.fm.trans.domain.User"/>
+   <mapping class="com.fm.trans.domain.Items"/>
+   
     </session-factory>
 </hibernate-configuration>
