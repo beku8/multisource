@@ -8,6 +8,7 @@ import com.fm.trans.repository.hibernate.AbstractHibernateDaoTest;
 
 public class SomeUserServiceTest extends AbstractHibernateDaoTest {
 	
+	
 	@Autowired private SomeUserService userService;
 	
 	/**
@@ -16,8 +17,14 @@ public class SomeUserServiceTest extends AbstractHibernateDaoTest {
 	 * 
 	 */
 	@Test(expected = HibernateException.class)
-	public void deleteByUsername(){
+	public void deleteByUsernameFailure(){
 		userService.deleteByUsername("beku");
+		sessionFactory.getCurrentSession().flush();
+	}
+	
+	@Test
+	public void deleteByUsernameSuccess(){
+		userService.deleteByUsername("koala");
 		sessionFactory.getCurrentSession().flush();
 	}
 

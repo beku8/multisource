@@ -17,6 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @TransactionConfiguration(transactionManager="jdbcTxMgr", defaultRollback=true)
 @TestExecutionListeners( { DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class })
 @Transactional
-public class AbstractJdbcDaoTest {
+public abstract class AbstractJdbcDaoTest {
 
 }
