@@ -13,7 +13,8 @@
     <context:property-placeholder system-properties-mode="OVERRIDE" properties-ref="environment"/>
     <util:properties id="environment">
     	<prop key="cas.service.url">https://localhost:8443</prop>
-    	<prop key="cas.server.url">https://localhost:9443</prop>
+    	<prop key="cas.server.url">https://app.tamis.mn</prop>
+<!-- 		<prop key="cas.server.url">https://localhost:9443</prop> -->
     </util:properties>
 
 	<bean id="serviceProperties" class="org.springframework.security.cas.ServiceProperties">
@@ -58,11 +59,13 @@
 	    </property>
 	    <property name="key" value="an_id_for_this_auth_provider_only"/>
 	  </bean>
+	  
+	  <bean id="userService" class="com.fm.multisource.security.CustomUserDetailsService"></bean>
 	
-	  <security:user-service id="userService">
-	    <security:user name="admin" authorities="ROLE_USER" />
-	    <security:user name="koala" authorities="ROLE_USER" />
-	  </security:user-service>
+<!-- 	  <security:user-service id="userService"> -->
+<!-- 	    <security:user name="admin" authorities="ROLE_USER" /> -->
+<!-- 	    <security:user name="koala" authorities="ROLE_USER" /> -->
+<!-- 	  </security:user-service> -->
 	  
 	  <!-- This filter handles a Single Logout Request from the CAS Server -->
 	  <bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/>

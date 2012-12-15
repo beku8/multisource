@@ -14,6 +14,23 @@
      		</props>
      	</property>
      </bean>
+     
+    <bean id="userDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	    <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/router_users?characterEncoding=UTF-8"/>
+	    <property name="user" value="router"/>
+	    <property name="password" value="router"/>
+	    <property name="initialPoolSize" value="5"></property>
+	    <property name="minPoolSize" value="5"></property>
+	    <property name="maxPoolSize" value="15"/>
+	    <property name="maxStatements" value="50"></property>
+	    <property name="automaticTestTable" value="c3p0_test_table"></property>
+	    <property name="idleConnectionTestPeriod" value="21600"></property> 
+	</bean>
+	
+	<bean id="userJdbcDao" class="com.fm.multisource.dao.jdbc.UserJdbcDao">
+		<property name="dataSource" ref="userDataSource"></property>
+	</bean>
 
 	<bean id="dataSource" class="com.fm.multisource.datasource.CustomerRoutingDataSource">
 	   <property name="targetDataSources">
