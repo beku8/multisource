@@ -4,7 +4,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
 public class UserJdbcDaoTest extends AbstractJdbcDaoTest{
 	
@@ -27,7 +26,7 @@ public class UserJdbcDaoTest extends AbstractJdbcDaoTest{
 	@Test
 	public void testDelete(){
 		int firstCount = userJdbcDao.getAllUsernames().size();
-		userJdbcDao.delete("naran");
+		userJdbcDao.delete("koala");
 		int secondCount = userJdbcDao.getAllUsernames().size();
 		Assert.assertEquals(firstCount - 1, secondCount);
 	}
