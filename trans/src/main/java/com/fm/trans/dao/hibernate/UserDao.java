@@ -11,4 +11,5 @@ public class UserDao extends AbstractDao<User> {
 		super.setClazz(User.class);
 	}
 
+
 }

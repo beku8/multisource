@@ -30,10 +30,25 @@
 	<logger name="org.springframework.context">
 		<level value="info" />
 	</logger>
-
+	
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+	
+	
+	<logger name="org.springframework.transaction">
+		<level value="info"></level>
+	</logger>
+	
+	<logger name="org.springframework.transaction">
+		<level value="debug"></level>
+	</logger>
+	
+	<logger name="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<level value="debug"></level>
+	</logger>
+	
+	
 
 	<!-- Root Logger -->
 	<root>
