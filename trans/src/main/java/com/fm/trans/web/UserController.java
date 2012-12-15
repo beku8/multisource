@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fm.trans.dao.hibernate.UserDao;
+import com.fm.trans.domain.User;
 import com.fm.trans.service.SomeUserService;
 
 @Controller
@@ -37,5 +38,12 @@ public class UserController {
 		}
 		return "redirect:/user";
 	}
+	
+	@RequestMapping(value="/add/{name}")
+	public String add(Model model, @PathVariable("name") String username){
+		userDao.save(new User(username));
+		return "redirect:/user";
+	}
+	
 
 }

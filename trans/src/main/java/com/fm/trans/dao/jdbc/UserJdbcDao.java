@@ -27,5 +27,15 @@ public class UserJdbcDao extends JdbcDaoSupport {
 		
 		return result;
 	}
+	
+	public void createUser(String username){
+		String sql = "insert into user (username) values (?)";
+		getJdbcTemplate().update(sql, username);
+	}
+	
+	public void delete(String username){
+		String sql = "delete from user WHERE username = ?";
+		getJdbcTemplate().update(sql, username);
+	}
 
 }
