@@ -7,16 +7,19 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fm.trans.dao.hibernate.ItemsDao;
+import com.fm.trans.dao.hibernate.UserDao;
 import com.fm.trans.domain.Items;
 
 public class ItemsDaoTest extends AbstractHibernateDaoTest{
 	
 	@Autowired private ItemsDao itemsDao;
+	@Autowired private UserDao userDao;
 	
 	@Test
 	public void testFindAll(){
 		List<Items> items = itemsDao.findAll();
 		Assert.assertNotNull(items);
+		Assert.assertEquals(3, items.size());
 	}
 	
 	@Test
@@ -34,6 +37,16 @@ public class ItemsDaoTest extends AbstractHibernateDaoTest{
 	
 	@Test
 	public void testSaveOrUpdate(){
+		int firstCount = itemsDao.findAll().size();
+
+		Items items = new Items(userDao.find("koala"), "some test item");
+		itemsDao.save(items);
+		
+		int secondCount = itemsDao.findAll().size();
+		Assert.assertEquals(firstCount + 1, secondCount);
+		
+		List<Items> itemsForKoala = itemsDao.getByUsername("koala");
+		Assert.assertEquals(itemsForKoala.size(), 1);
 	}
 
 }

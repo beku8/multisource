@@ -9,29 +9,14 @@
 	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
 	">
 	
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+		<jdbc:script location="classpath:trans_db.sql"/>
+	</jdbc:embedded-database>
+	
 	<jdbc:embedded-database id="userDataSource" type="HSQL">
 		<jdbc:script location="classpath:trans_login.sql"/>
 	</jdbc:embedded-database>
 	
-	<bean id="parentDataSource" abstract="true" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-	    <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-	    <property name="user" value="router"/>
-	    <property name="password" value="router"/>
-	    <property name="initialPoolSize" value="5"></property>
-	    <property name="minPoolSize" value="5"></property>
-	    <property name="maxPoolSize" value="15"/>
-	    <property name="maxStatements" value="50"></property>
-	    <property name="automaticTestTable" value="c3p0_test_table"></property>
-	    <property name="idleConnectionTestPeriod" value="21600"></property> 
-	</bean>
-	 
-	<bean id="dataSource" parent="parentDataSource">
-	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/trans_db?characterEncoding=UTF-8"/>
-	</bean>
-	 
-<!-- 	<bean id="userDataSource" parent="parentDataSource"> -->
-<!-- 	   <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/trans_login?characterEncoding=UTF-8"/> -->
-<!-- 	</bean> -->
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
      p:dataSource-ref="dataSource" p:packagesToScan="com.fm.trans.domain">
